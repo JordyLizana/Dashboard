@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/icon.png">
+    <title>Dashboard Profesional</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <div class="loader-wrapper" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+             <div class="sidebar-header">
+                 <i class="fa-solid fa-chart-line logo-icon"></i>
+                 <span class="logo-text">Mi Dashboard</span>
+            </div>
+            <div class="user-profile">
+                <img src="/John Doe.png" alt="Avatar de Janet Williams" class="user-avatar">
+                <div class="user-info">
+                    <span class="user-name">Janet Williams</span>
+                    <span class="user-role">Administrador</span>
+                </div>
+            </div>
+             <nav class="nav-menu" role="navigation" aria-label="Menú principal">
+                 <ul>
+                     <li class="nav-item">
+                         <a href="#" data-view="overview" aria-current="page">
+                             <i class="fa-solid fa-gauge-high nav-icon"></i>
+                             <span>Visión General</span>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="#" data-view="analytics">
+                             <i class="fa-solid fa-chart-pie nav-icon"></i>
+                             <span>Analíticas</span>
+                         </a>
+                     </li>
+                      <li class="nav-item">
+                         <a href="#" data-view="users">
+                            <i class="fa-solid fa-users nav-icon"></i>
+                             <span>Usuarios</span>
+                         </a>
+                     </li>
+                     <li class="nav-item">
+                         <a href="#" data-view="settings">
+                             <i class="fa-solid fa-cog nav-icon"></i>
+                             <span>Configuración</span>
+                         </a>
+                     </li>
+                 </ul>
+             </nav>
+            <div class="sidebar-footer">
+                <button type="button" class="logout-button" id="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Cerrar Sesión</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+             <header class="main-header">
+                 <div class="header-title">
+                     <h1 id="main-title">Visión General Analítica</h1>
+                     <p id="main-subtitle">Resumen de métricas clave y tendencias.</p>
+                 </div>
+                 <div class="header-actions">
+                     <div class="search-container">
+                         <button class="action-button icon-button" id="search-btn" aria-label="Buscar">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                        <input type="search" id="search-input" class="search-input hidden" placeholder="Buscar...">
+                    </div>
+                    <div class="notification-container">
+                         <button class="action-button icon-button" id="notifications-btn" aria-label="Notificaciones" aria-expanded="false">
+                            <i class="fa-regular fa-bell"></i>
+                             <span class="notification-badge" id="notification-badge">3</span>
+                        </button>
+                         <div id="notifications-dropdown" class="dropdown-panel hidden" role="region" aria-labelledby="notifications-btn">
+                             <div class="dropdown-header">Notificaciones</div>
+                             <ul class="notification-list">
+                                 <li><a href="#"><i class="fa-solid fa-chart-simple fa-fw"></i> Nuevo reporte semanal disponible. <span class="time">Hace 5 min</span></a></li>
+                                 <li><a href="#"><i class="fa-solid fa-user-plus fa-fw"></i> 3 nuevos usuarios registrados. <span class="time">Hace 1 hora</span></a></li>
+                                 <li><a href="#"><i class="fa-solid fa-triangle-exclamation fa-fw"></i> Alerta: El uso de CPU superó el 90%. <span class="time">Hace 3 horas</span></a></li>
+                                 <li><a href="#" class="all-notifications">Ver todas las notificaciones</a></li>
+                             </ul>
+                         </div>
+                    </div>
+                    <button class="action-button primary" id="create-report-btn">
+                       <i class="fa-solid fa-plus"></i> Crear Reporte
+                    </button>
+                </div>
+            </header>
+             <div class="views-container">
+                 <section id="overview-view" class="view-section active" role="region" aria-labelledby="overview-title">
+                      <div class="data-grid">
+                        <div class="data-card large-card" role="article" aria-labelledby="tendencia-title">
+                            <div class="card-header"> <h2 id="tendencia-title">Tendencia Principal (Ventas)</h2> <div class="card-filters" id="main-chart-filters"> <select name="dataType" id="data-type-filter" aria-label="Tipo de dato"> <option value="ventas" selected>Ventas</option> <option value="usuarios">Usuarios</option> </select> <select name="range" id="range-filter" aria-label="Rango de fechas"> <option value="3m">3 Meses</option> <option value="6m" selected>6 Meses</option> <option value="12m">1 Año</option> </select> <button class="filter-button active" data-filter-type="status" data-filter-value="actual">Actual</button> <button class="filter-button" data-filter-type="status" data-filter-value="today">Hoy</button> </div> </div>
+                            <div class="card-body"> <canvas id="tendenciaChart"></canvas> </div>
+                        </div>
+                        <div class="data-card" role="article" aria-labelledby="region-title"> <div class="card-header"> <h2 id="region-title">Distribución Regional</h2> </div> <div class="card-body"> <canvas id="resumen1Chart"></canvas> </div> </div>
+                        <div class="data-card" role="article" aria-labelledby="traffic-title"> <div class="card-header"> <h2 id="traffic-title">Fuentes de Tráfico</h2> </div> <div class="card-body"> <canvas id="resumen2Chart"></canvas> </div> </div>
+                        <div class="data-card" role="article" aria-labelledby="summary-title"> <div class="card-header"> <h2 id="summary-title">Resumen Rápido</h2> </div> <div class="card-body summary-list"> <div class="summary-item"> <span>Usuarios Activos</span> <strong class="positive">+1,250</strong> </div> <div class="summary-item"> <span>Nuevos Registros (Hoy)</span> <strong class="positive">+85</strong> </div> <div class="summary-item"> <span>Tasa de Rebote</span> <strong class="negative">-2.5%</strong> </div> <div class="summary-item"> <span>Conversión</span> <strong class="neutral">3.5%</strong> </div> </div> </div>
+                     </div>
+                 </section>
+                 <section id="analytics-view" class="view-section hidden" role="region" aria-labelledby="analytics-title"> <h2 id="analytics-title" class="view-title">Página de Analíticas Detalladas</h2> <p>Aquí iría contenido más específico de analíticas...</p> <div class="placeholder-content"> (Contenido de Analíticas) </div> </section>
+                 <section id="users-view" class="view-section hidden" role="region" aria-labelledby="users-title"> <h2 id="users-title" class="view-title">Gestión de Usuarios</h2> <p>Listado y gestión de usuarios del sistema.</p> <div class="placeholder-content"> (Contenido de Gestión de Usuarios) </div> </section>
+                 <section id="settings-view" class="view-section hidden" role="region" aria-labelledby="settings-title"> <h2 id="settings-title" class="view-title">Configuración de la Cuenta</h2> <p>Opciones y preferencias del usuario.</p> <div class="placeholder-content"> (Contenido de Configuración) </div> </section>
+             </div>
+              <footer class="main-footer"> <p>&copy; <span id="current-year"></span> Mi Dashboard Profesional. Todos los derechos reservados.</p> </footer>
+        </main>
+    </div>
+
+    <div class="modal-overlay hidden" id="modal-overlay"></div>
+    <div id="logout-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="logout-modal-title"> <div class="modal-content"> <h3 id="logout-modal-title">Confirmar Cierre de Sesión</h3> <p>¿Estás seguro de que deseas cerrar la sesión?</p> <div class="modal-actions"> <button class="modal-button secondary" id="logout-cancel-btn">Cancelar</button> <button class="modal-button danger" id="logout-confirm-btn">Cerrar Sesión</button> </div> </div> </div>
+    <div id="create-report-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="create-report-modal-title"> <div class="modal-content"> <h3 id="create-report-modal-title">Crear Nuevo Reporte</h3> <p>Selecciona el tipo de reporte que deseas generar:</p> <form id="create-report-form"> <div class="form-group"> <label><input type="radio" name="reportType" value="weekly" checked> Reporte Semanal</label> <label><input type="radio" name="reportType" value="monthly"> Reporte Mensual</label> <label><input type="radio" name="reportType" value="custom"> Reporte Personalizado</label> </div> </form> <div class="modal-actions"> <button class="modal-button secondary" id="create-report-cancel-btn">Cancelar</button> <button class="modal-button primary" id="create-report-confirm-btn">Crear</button> </div> </div> </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
